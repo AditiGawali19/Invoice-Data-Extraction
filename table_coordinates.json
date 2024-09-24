@@ -1,0 +1,240 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "2ad0e30e-1066-4de0-9aba-1e8bd9ef87c8",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "1.pdf:\n",
+      "\n",
+      "2.pdf:\n",
+      "\n",
+      "3.pdf:\n",
+      "\n",
+      "4.pdf:\n",
+      "\n",
+      "5.pdf:\n",
+      "\n",
+      "6.pdf:\n",
+      "\n",
+      "7.pdf:\n",
+      "\n",
+      "8.pdf:\n"
+     ]
+    }
+   ],
+   "source": [
+    "import json\n",
+    "import os\n",
+    "\n",
+    "def load_extracted_json(json_path):\n",
+    "    \"\"\"Loads the extracted JSON data from the specified path.\"\"\"\n",
+    "    if not os.path.exists(json_path):\n",
+    "        print(f\"Error: The JSON file at {json_path} does not exist.\")\n",
+    "        return None\n",
+    "    \n",
+    "    with open(json_path, 'r') as json_file:\n",
+    "        data = json.load(json_file)\n",
+    "    return data\n",
+    "\n",
+    "def display_invoice_data(data):\n",
+    "    \"\"\"Displays the invoice data in a readable format.\"\"\"\n",
+    "    for invoice, tables in data.items():\n",
+    "        print(f\"\\n{invoice}:\")\n",
+    "        for index, table in enumerate(tables):\n",
+    "            print(f\"  Table {index + 1}:\")\n",
+    "            print(f\"    Coordinates: {table['coordinates']}\")\n",
+    "            print(f\"    Rows: {table['rows']}, Columns: {table['columns']}\")\n",
+    "\n",
+    "# Specify the path to your extracted JSON file\n",
+    "json_file_path = 'C:/Users/91808/Desktop/Task2/Input/table_coordinates.json'  # Ensure this path is correct\n",
+    "\n",
+    "# Load and display the JSON data\n",
+    "invoice_data = load_extracted_json(json_file_path)\n",
+    "if invoice_data is not None:\n",
+    "    display_invoice_data(invoice_data)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "2f6e3867-49b4-4e86-b68b-97beaa5a74f5",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{\n",
+      "    \"1.pdf\": [],\n",
+      "    \"2.pdf\": [],\n",
+      "    \"3.pdf\": [],\n",
+      "    \"4.pdf\": [],\n",
+      "    \"5.pdf\": [],\n",
+      "    \"6.pdf\": [],\n",
+      "    \"7.pdf\": [],\n",
+      "    \"8.pdf\": []\n",
+      "}\n"
+     ]
+    }
+   ],
+   "source": [
+    "import json\n",
+    "\n",
+    "# Specify the path to your extracted JSON file\n",
+    "json_file_path = 'C:/Users/91808/Desktop/Task2/Input/table_coordinates.json'  # Ensure this path is correct\n",
+    "\n",
+    "# Load and display the JSON data\n",
+    "with open(json_file_path, 'r') as json_file:\n",
+    "    data = json.load(json_file)\n",
+    "\n",
+    "print(json.dumps(data, indent=4))  # Pretty print the JSON structure\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "ca1799cf-0775-43fa-941e-26dc12482912",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Extracting tables from C:/Users/91808/Desktop/Task2/Input\\1.pdf...\n",
+      "Extracting tables from C:/Users/91808/Desktop/Task2/Input\\2.pdf...\n",
+      "Extracting tables from C:/Users/91808/Desktop/Task2/Input\\3.pdf...\n",
+      "Extracting tables from C:/Users/91808/Desktop/Task2/Input\\4.pdf...\n",
+      "Extracting tables from C:/Users/91808/Desktop/Task2/Input\\5.pdf...\n",
+      "Extracting tables from C:/Users/91808/Desktop/Task2/Input\\6.pdf...\n",
+      "Extracting tables from C:/Users/91808/Desktop/Task2/Input\\7.pdf...\n",
+      "Extracting tables from C:/Users/91808/Desktop/Task2/Input\\8.pdf...\n",
+      "Table coordinates extracted and saved to C:/Users/91808/Desktop/Task2/Input/table_coordinates.json.\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pdfplumber\n",
+    "import json\n",
+    "\n",
+    "def extract_table_coordinates(pdf_path):\n",
+    "    \"\"\"Extracts table coordinates from the specified PDF.\"\"\"\n",
+    "    tables_data = {}\n",
+    "    \n",
+    "    with pdfplumber.open(pdf_path) as pdf:\n",
+    "        for page_num, page in enumerate(pdf.pages):\n",
+    "            tables = page.extract_tables()\n",
+    "            for i, table in enumerate(tables):\n",
+    "                if table:  # Ensure the table is not empty\n",
+    "                    # Extract coordinates and number of rows and columns\n",
+    "                    x0, y0, x1, y1 = page.bbox\n",
+    "                    rows = len(table)\n",
+    "                    columns = len(table[0])\n",
+    "                    \n",
+    "                    # Store coordinates (as an example, modify as needed)\n",
+    "                    table_coordinates = {\n",
+    "                        \"coordinates\": {\n",
+    "                            \"x1\": x0,\n",
+    "                            \"y1\": y0,\n",
+    "                            \"x2\": x1,\n",
+    "                            \"y2\": y1\n",
+    "                        },\n",
+    "                        \"rows\": rows,\n",
+    "                        \"columns\": columns\n",
+    "                    }\n",
+    "                    \n",
+    "                    # Add to the dictionary\n",
+    "                    tables_data.setdefault(f\"{pdf_path.split('/')[-1]}\", []).append(table_coordinates)\n",
+    "\n",
+    "    return tables_data\n",
+    "\n",
+    "def process_invoices(folder_path):\n",
+    "    \"\"\"Processes all PDF invoices in the specified folder.\"\"\"\n",
+    "    all_tables_data = {}\n",
+    "    for filename in os.listdir(folder_path):\n",
+    "        if filename.endswith('.pdf'):\n",
+    "            pdf_path = os.path.join(folder_path, filename)\n",
+    "            print(f\"Extracting tables from {pdf_path}...\")\n",
+    "            tables_data = extract_table_coordinates(pdf_path)\n",
+    "            all_tables_data.update(tables_data)\n",
+    "\n",
+    "    return all_tables_data\n",
+    "\n",
+    "# Specify the path to your input folder containing PDF files\n",
+    "input_folder_path = 'C:/Users/91808/Desktop/Task2/Input'  # Update with your path\n",
+    "\n",
+    "# Process all invoices and save results\n",
+    "extracted_tables = process_invoices(input_folder_path)\n",
+    "\n",
+    "# Save the results to a JSON file\n",
+    "output_json_path = 'C:/Users/91808/Desktop/Task2/Input/table_coordinates.json'\n",
+    "with open(output_json_path, 'w') as json_file:\n",
+    "    json.dump(extracted_tables, json_file, indent=4)\n",
+    "\n",
+    "print(f\"Table coordinates extracted and saved to {output_json_path}.\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "63d89952-9573-4c99-834f-95cf3aa27650",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{}\n"
+     ]
+    }
+   ],
+   "source": [
+    "import json\n",
+    "\n",
+    "# Load table coordinates from the JSON file\n",
+    "json_file_path = 'C:/Users/91808/Desktop/Task2/Input/table_coordinates.json'  # Update this path as needed\n",
+    "\n",
+    "with open(json_file_path, 'r') as json_file:\n",
+    "    table_coordinates = json.load(json_file)\n",
+    "\n",
+    "# Check the loaded coordinates\n",
+    "print(json.dumps(table_coordinates, indent=4))\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "1d8fad14-bdc1-4493-aba3-517599d6984b",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
