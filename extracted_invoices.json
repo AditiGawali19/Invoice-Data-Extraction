@@ -1,0 +1,82 @@
+{
+    "Invoice_1": {
+        "customer_name": "Richard Glenn",
+        "billing_info": null,
+        "invoice_no": "INV-0012",
+        "address": "4275 Crummit Lane, Happy Village New York, NY, 281502",
+        "text": [
+            ""
+        ],
+        "tables": []
+    },
+    "Invoice_2": {
+        "customer_name": null,
+        "billing_info": null,
+        "invoice_no": "INV-00004",
+        "address": "4121 Barfield Lane Indianpolis, IN,46225",
+        "text": [
+            ""
+        ],
+        "tables": []
+    },
+    "Invoice_3": {
+        "customer_name": "John Smith",
+        "billing_info": null,
+        "invoice_no": "US-001",
+        "address": "John Smith 3787 Pineview Drive Cambridge, MA 12210",
+        "text": [
+            ""
+        ],
+        "tables": []
+    },
+    "Invoice_4": {
+        "customer_name": null,
+        "billing_info": null,
+        "invoice_no": "F1000876/23",
+        "address": "100 Mighty Bay 125863 Rome, IT 00 39 5658 444 52474",
+        "text": [
+            ""
+        ],
+        "tables": []
+    },
+    "Invoice_5": {
+        "customer_name": "John Smith",
+        "billing_info": null,
+        "invoice_no": "US-001",
+        "address": "John Smith 3787 Pineview Drive Cambridge, MA 12210",
+        "text": [
+            ""
+        ],
+        "tables": []
+    },
+    "Invoice_6": {
+        "customer_name": "John Smith",
+        "billing_info": null,
+        "invoice_no": null,
+        "address": "John smith 123 Main street, Anytown, USA",
+        "text": [
+            ""
+        ],
+        "tables": []
+    },
+    "Invoice_7": {
+        "customer_name": null,
+        "billing_info": null,
+        "invoice_no": "1234567",
+        "address": "Widget Tec 3545 Long Beach Blvd, Long Beach, CA 90807"
+        "text": [
+            ""
+        ],
+        "tables": []
+    },
+    "Invoice_8": {
+        "customer_name": null,
+        "billing_info": null,
+        "invoice_no": "DD703",
+        "address": "Widget Tec 3545 Long Beach Blvd, Long Beach, CA 90807",
+        "text": [
+            ""
+        ],
+        "tables": []
+    }
+}
